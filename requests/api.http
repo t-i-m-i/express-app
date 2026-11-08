@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:3333
+@userId = alice
+
+### Health (public, no auth)
+GET {{baseUrl}}/health
+Accept: application/json
+
+### Auth gate check (no x-user-id -> 401)
+GET {{baseUrl}}/v1/favourite-items
+Accept: application/json
+
+### Get favourite items
+GET {{baseUrl}}/v1/favourite-items
+Accept: application/json
+x-user-id: {{userId}}
+
+### Add favourite item
+POST {{baseUrl}}/v1/favourite-items
+Content-Type: application/json
+x-user-id: {{userId}}
+
+{
+  "itemId": 1
+}
+
+### Remove favourite item
+DELETE {{baseUrl}}/v1/favourite-items
+Content-Type: application/json
+x-user-id: {{userId}}
+
+{
+  "itemId": 1
+}
+
+### Boom (async throw -> error handler)
+GET {{baseUrl}}/v1/boom
+Accept: application/json
+x-user-id: {{userId}}
